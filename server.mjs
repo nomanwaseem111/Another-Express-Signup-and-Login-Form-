@@ -12,10 +12,10 @@ const port = process.env.PORT || 3000
 let userBase = [];
 
 app.post('/signup', (req, res) => {
-  
+
     let body = req.body;
 
-    if(!body.fname || !body.lname || !body.email || !body.password){
+    if (!body.fname || !body.lname || !body.email || !body.password) {
 
         res.status(400).send(`required all fields, for example
         
@@ -33,47 +33,47 @@ app.post('/signup', (req, res) => {
 
     let isFound = false;
 
-    for(let i = 0; i < userBase.length; i++){
-   
-         if(userBase[i].email === body.email.toLowerCase()){
+    for (let i = 0; i < userBase.length; i++) {
+
+        if (userBase[i].email === body.email.toLowerCase()) {
             isFound = true
             break;
-         }      
+        }
 
     }
 
-    if(isFound){
-        res.status(400).send({ message : 'This Email id is Already Registered'})
+    if (isFound) {
+        res.status(400).send({ message: 'This Email id is Already Registered' })
     }
 
-   
+
     let newUsers = {
-        userId : nanoid(),
-        fname : body.fname,
-        lname : body.lname,
-        email : body.email.toLowerCase(),
-        password : body.password,
+        userId: nanoid(),
+        fname: body.fname,
+        lname: body.lname,
+        email: body.email.toLowerCase(),
+        password: body.password,
     }
 
 
-   
+
 
 
 
     userBase.push(newUsers);
 
-    res.status(201).send( {message : 'User is Created'})
+    res.status(201).send({ message: 'User is Created' })
 
 })
 
 
 
 
-app.post('/login', (req,res) => {
+app.post('/login', (req, res) => {
 
     let body = req.body
 
-     if(!body.email || !body.password){
+    if (!body.email || !body.password) {
 
         res.status(400).send(`required all fields,for example
         
@@ -81,48 +81,48 @@ app.post('/login', (req,res) => {
                email : "john@abc@.com",
                password : "1234"
           }`)
-          return;
-     }
+        return;
+    }
 
 
-      let isFound = false;
+    let isFound = false;
 
-   for(let i = 0; i < userBase.length; i++){
+    for (let i = 0; i < userBase.length; i++) {
 
-      if(userBase[i].email === body.email){
+        if (userBase[i].email === body.email) {
 
-        isFound = true
-         if(userBase[i].password === body.password){
+            isFound = true
+            if (userBase[i].password === body.password) {
 
-             res.status(201).send(
-                {
-                     fname : body.fname,
-                     lname : body.lname,
-                     email : body.email.toLowerCase(),
-                     message : 'Login Successful'
-                })
+                res.status(201).send(
+                    {
+                        fname: body.fname,
+                        lname: body.lname,
+                        email: body.email.toLowerCase(),
+                        message: 'Login Successful'
+                    })
                 return;
 
-         }else{
-            res.status(404).send({message : 'User not Found'})
-            
-         }
-         return;
-        
+            } else {
+                res.status(404).send({ message: 'User not Found' })
+
+            }
+            return;
+
         }
-}
+    }
 
 
 
-if(!isFound){
-    res.status(404).send({message : 'The email address or password you entered is \n\'t connected to an account. Find your account and log in.'})
-    return;
+    if (!isFound) {
+        res.status(404).send({ message: 'The email address or password you entered is \n\'t connected to an account. Find your account and log in.' })
+        return;
 
-}
+    }
 
 })
 
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
