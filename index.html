@@ -74,7 +74,7 @@
    }
 
 
-   axios.post('https://express-signup-practice-form.herokuapp.com/signup', {
+   axios.post('https://localhost:3000/signup', {
      
        fname,
        lname,
@@ -82,7 +82,7 @@
        password
   })
   .then(function (response) {
-    console.log(response.data);
+    console.log(response.data.message);
     document.getElementById('message').innerHTML = response.data.message
   })
   .catch(function (error) {
